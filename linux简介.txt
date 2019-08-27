@@ -1,0 +1,107 @@
+
+https://www.cnblogs.com/eagle6688/p/7838224.html
+https://www.cnblogs.com/pengyan-9826/p/7767070.html
+
+mysql主从结构
+
+https://blog.csdn.net/weixin_42231507/article/details/80778249
+Linux简介
+  Linux是一款开源免费的操作系统，主要用于生产环境(web应用部署的环境),
+  Linux常用的厂商有centos  ubuntu  red hat
+
+Linux的文件系统
+[root@localhost ~]#   
+ 用户名在什么地方登陆 当前用户的家   # 命令提示符
+ pwd 查看当前光标所属的位置
+ cd  切换光标位置  
+ / 代表当前操作系统的根节点(linux没有分盘，文件系统的顶层就是根节点),
+ linux文件系统是树状结构
+ /根节点下有哪些常用的目录
+  bin 目录  超链接   存放的是系统相关的shell命令
+  home  目录   家 存放的是除了root用户之外所有用户的家
+  lib  存放系统相关的类库
+  boot  系统启动相关的
+  etc(重点)  系统相关的配置文件
+  root   root用户的家目录
+  usr(重点)  将来安装部署软件
+ls  列出当前路径下所有的文件结构
+ll  列出当前路径下所有的文件结构的详情 ls -l
+clear 清屏
+方向键 上下键  回到上一个或下一个shell的历史命令
+
+linu文件系统的基本操作
+增删改查
+关于目录 
+mkdir 路径  创建一个文件夹
+mv 路径1  路径2   重命名或移动
+cp -r(递归) 路径1 路径2  将路径1的文件复制到路径2
+rm -rf(递归确认) 路径    递归并确认删除该路径的文件目录 
+
+关于文件
+在Linux环境下，文件不需要有后缀的,windows下有txt .doc等，创建的文件默认都是文本
+文件
+touch 文件路径  创建一个文件
+mv 路径1  路径2   重命名或移动
+cp -r(递归) 路径1 路径2  将路径1的文件复制到路径2
+vi 文件路径    使用vi编辑器，进入编辑模式,按字母 a/i，进入insert模式
+上下左右方向键，移动光标，就可以对文件进行编辑了，
+按字母esc键提出 编辑模式 输入:w(保存)q(退出)!(强制)
+cat   查看文件内容  文件路径
+more  查看更多
+tail  查看明细
+rm -f  文件路径  确认删除一个文件
+
+linux文件系统的基本权限
+读写执行 权限
+rwx
+
+运行ll命令，查看当前路径下文件明细
+文件的基本权限由一组11位字符组成
+lrwxrwxrwx. 
+dr-xr-xr-x. 
+-rw-r--r--.
+第一位字符代表文件类型  l(link) 超链接  d(directory)目录 -(普通文件)
+后9位字符，每三位为一组，分表代表，宿主用户、宿主用户所属分组的所有用户、
+除了宿主和所属组其余的用户，分别对该文件所拥有的读写执行权限
+
+文件的权限管理
+对某一个文件的三组权限进行设置
+两种常用方式:
+r  4
+w  2
+x  1
+
+chmod 666(777  666 644) aaa.txt
+chmod (u 当前用户  g group  a all)+(-)x(w r)   文件
+
+centos7的网卡以及网络设置
+centos7和centos6 有差异性
+systemctl   系统服务相关   命令(start stop  disable)   服务名
+关闭防火墙 
+    systemctl stop firewalld   关闭防火墙
+    systemctl disable firewalld  禁用防火墙
+    systemctl restart network  重启网卡
+
+vmware三种网络连接模式
+   桥接模式            虚拟网卡物理连接
+   仅主机模式          借助于宿主机ip去上网
+   nat模式   net8网卡  虚拟机有真实Ip 
+
+设置静态ip
+  1:查看虚拟网络编辑器，记一下net8的子网和网关,取消dhcp服务
+  2:修改虚拟机的ip地址，设置成静态
+   vi /etc/sysconfig/network-scripts/ifcfg-ens33
+将协议改成静态 static
+IPADDR=192.168.137.222
+GATEWAY=192.168.137.2
+NETMASK=255.255.255.0
+DNS1=8.8.8.8
+3：重启网卡  systemctl restart network
+4:ping www.baidu.com   
+
+linu下使用wget命令进行下载，yum命令进行在线安装
+wget  资源路径  
+如果提示wget命令不存在
+yum search wget
+yum install wget
+wget www.baidu.com
